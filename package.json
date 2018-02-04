@@ -4,7 +4,11 @@
   "description": "Geo-Jumper Backend",
   "main": "index.js",
   "scripts": {
-    "test": "jest -i --coverage"
+    "test": "jest -i --coverage",
+    "start": "node index.js",
+    "watch": "nodemon index.js --ignore logs",
+    "dbon": "mkdir -p ./db && mongod --dbpath ./db",
+    "dboff": "killall mongod"
   },
   "repository": {
     "type": "git",
