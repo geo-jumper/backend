@@ -1,0 +1,42 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Geo-Jumper Backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest -i --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geo-jumper/backend.git"
+  },
+  "keywords": [
+    "GUI",
+    "jumper"
+  ],
+  "author": "Catherine Looper, Jeff Kusowski, Dalton Carr, Matt LeBlanc, Cameron Moorehead",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/geo-jumper/backend/issues"
+  },
+  "homepage": "https://github.com/geo-jumper/backend#readme",
+  "devDependencies": {
+    "eslint": "^4.17.0",
+    "jest": "^22.1.4"
+  },
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "crypto": "^1.0.1",
+    "dotenv": "^5.0.0",
+    "express": "^4.16.2",
+    "faker": "^4.1.0",
+    "fs-extra": "^5.0.0",
+    "http-errors": "^1.6.2",
+    "jsonwebtoken": "^8.1.1",
+    "mongoose": "^5.0.3",
+    "superagent": "^3.8.2",
+    "winston": "^2.4.0"
+  }
+}
