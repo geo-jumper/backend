@@ -11,7 +11,7 @@
 
 # Backend Application
 
-
+#### `Staging` : [![Build Status](https://travis-ci.org/geo-jumper/backend.svg?branch=staging)](https://travis-ci.org/geo-jumper/backend)
 #### `Master` : [![Build Status](https://travis-ci.org/geo-jumper/backend.svg?branch=master)](https://travis-ci.org/geo-jumper/backend)
 
 # Code Fellows: Seattle 401 JavaScript - 401d19 
