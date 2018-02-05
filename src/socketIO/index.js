@@ -6,7 +6,7 @@ export const socketInit = server => {
   const io = require('socket.io')(server);
 
   // open cors
-  io.set('origins', 'http://localhost:8080');
+  // io.set('origins', 'http://localhost:8080');
 
   // Localized state to change into DB state
   const USERS = {};
@@ -33,13 +33,20 @@ export const socketInit = server => {
       console.log('LEFT', socket.id);
     });
 
-    socket.on('send-message', data => {
-      data.username = USERS[socket.id].username;
-      data.timestamp = new Date();
-
-      console.log('Message:', data);
-      io.in(USERS[socket.id].room).emit('receive-message', data);
+    socket.on('update-player', (playerObject) => {
+      // player object = { x, y, width, height }
+      // socket.broadcast.emit('render-players', playerObject);
+      // io.in(USERS[socket.id].room).emit('render-players', playerObject);
+      socket.broadcast.to(USERS[socket.id].room).emit('render-players', playerObject);
     });
+    
+    // socket.on('send-message', data => {
+    //   data.username = USERS[socket.id].username;
+    //   data.timestamp = new Date();
+
+    //   console.log('Message:', data);
+    //   io.in(USERS[socket.id].room).emit('receive-message', data);
+    // });
 
     socket.on('set-username', data => {
       USERS[socket.id].username = data.username;
