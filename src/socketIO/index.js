@@ -28,6 +28,10 @@ export const socketInit = server => {
     USERS[socket.id].username = 'anon';
     USERS[socket.id].room = room;
 
+    if (MAX_USERS === 0) {
+      io.in(USERS[socket.id].room).emit('match-found');
+    }
+
     socket.on('disconnect', () => {
       socket.leave(room);
       console.log('LEFT', socket.id);
