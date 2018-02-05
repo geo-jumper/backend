@@ -10,6 +10,7 @@ export default new Router()
     return Account.create(request.body)
       .then(account => account.createToken())
       .then(token => {
+        console.log('token',token);
         response.cookie('X-SOCKET-TOKEN', token, { maxAge: 900000 });
         response.send(token);
       })
