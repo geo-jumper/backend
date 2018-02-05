@@ -1,0 +1,57 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Geo-Jumper Backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest -i --coverage",
+    "start": "node index.js",
+    "watch": "nodemon index.js --ignore logs",
+    "dbon": "mkdir -p ./db && mongod --dbpath ./db",
+    "dboff": "killall mongod"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geo-jumper/backend.git"
+  },
+  "keywords": [
+    "GUI",
+    "jumper"
+  ],
+  "author": "Catherine Looper, Jeff Kusowski, Dalton Carr, Matt LeBlanc, Cameron Moorehead",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/geo-jumper/backend/issues"
+  },
+  "homepage": "https://github.com/geo-jumper/backend#readme",
+  "devDependencies": {
+    "eslint": "^4.17.0",
+    "jest": "^22.1.4"
+  },
+  "dependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "crypto": "^1.0.1",
+    "dotenv": "^5.0.0",
+    "express": "^4.16.2",
+    "faker": "^4.1.0",
+    "fs-extra": "^5.0.0",
+    "http-errors": "^1.6.2",
+    "jsonwebtoken": "^8.1.1",
+    "mongoose": "^5.0.3",
+    "nodemon": "^1.14.12",
+    "serve-favicon": "^2.4.5",
+    "socket.io": "^2.0.4",
+    "superagent": "^3.8.2",
+    "uuid": "^3.2.1",
+    "winston": "^2.4.0"
+  }
+}
