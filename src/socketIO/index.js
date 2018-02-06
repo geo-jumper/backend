@@ -10,50 +10,51 @@ export const socketInit = server => {
 
   // Localized state to change into DB state
   const USERS = {};
-  const ROOMS = {};
 
   io.on('connection', socket => {
+    socket.on('join-room', () => {
+      if (MAX_USERS === 0) {
+        MAX_USERS = 2;
+        room = uuidv1();
+      }
 
-    if (MAX_USERS === 0) {
-      MAX_USERS = 2;
-      room = uuidv1();
-    }
+      MAX_USERS--;
 
-    MAX_USERS--;
+      socket.join(room);
+      console.log('user joined room', room);
 
-    socket.join(room);
-    console.log('user joined room', room);
+      USERS[socket.id] = {};
+      USERS[socket.id].username = 'anon';
+      USERS[socket.id].room = room;
 
-    USERS[socket.id] = {};
-    USERS[socket.id].username = 'anon';
-    USERS[socket.id].room = room;
+      if (MAX_USERS === 0) {
+        io.in(USERS[socket.id].room).emit('match-found');
+      }
 
-    if (MAX_USERS === 0) {
-      io.in(USERS[socket.id].room).emit('match-found');
-    }
+      socket.on('disconnect', () => {
+        socket.leave(room);
+        console.log('LEFT', socket.id);
+      });
 
-    socket.on('disconnect', () => {
-      socket.leave(room);
-      console.log('LEFT', socket.id);
-    });
+      socket.on('update-player', (playerObject) => {
+        // player object = { x, y, width, height }
+        // socket.broadcast.emit('render-players', playerObject);
+        // io.in(USERS[socket.id].room).emit('render-players', playerObject);
+        socket.broadcast.to(USERS[socket.id].room).emit('render-players', playerObject);
+      });
 
-    socket.on('update-player', (playerObject) => {
-      // player object = { x, y, width, height }
-      // socket.broadcast.emit('render-players', playerObject);
-      // io.in(USERS[socket.id].room).emit('render-players', playerObject);
-      socket.broadcast.to(USERS[socket.id].room).emit('render-players', playerObject);
-    });
-    
-    // socket.on('send-message', data => {
-    //   data.username = USERS[socket.id].username;
-    //   data.timestamp = new Date();
+      // socket.on('send-message', data => {
+      //   data.username = USERS[socket.id].username;
+      //   data.timestamp = new Date();
 
-    //   console.log('Message:', data);
-    //   io.in(USERS[socket.id].room).emit('receive-message', data);
-    // });
+      //   console.log('Message:', data);
+      //   io.in(USERS[socket.id].room).emit('receive-message', data);
+      // });
 
-    socket.on('set-username', data => {
-      USERS[socket.id].username = data.username;
+      socket.on('set-username', data => {
+        USERS[socket.id].username = data.username;
+
+      });
     });
   });
 };
