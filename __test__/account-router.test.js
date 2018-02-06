@@ -17,7 +17,9 @@ describe('account-router.js', () => {
   describe('POST /signup', () => {
 
     test('creating account should respond with status 200 and a token if no errors', () => {
-      let accountToPost = { username: faker.internet.userName(), email: faker.internet.email(), password: faker.internet.password(), 
+      let accountToPost = { username: faker.internet.userName(),
+        email: faker.internet.email(),
+        password: faker.internet.password(), 
       };
 
       return superagent.post(`${__API_URL__}/signup`)

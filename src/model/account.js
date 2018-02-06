@@ -61,7 +61,7 @@ Account.create = account => {
   }
 
   let { password } = account;
-
+  account.tokenSeed = crypto.randomBytes(64).toString('hex');
   account = Object.assign({}, account, { password: undefined });
   const HASH_SALT_ROUNDS = 1;
 

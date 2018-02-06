@@ -19,7 +19,7 @@ const profileSchema = new Schema({
   },
 });
 
-const Profile = mongoose.model('profile', profileSchema);
+const Profile = module.exports = mongoose.model('profile', profileSchema);
 
 Profile.create = function(request) {
   return new Profile({
@@ -51,4 +51,3 @@ Profile.update = function(request) {
   return Profile.findByIdAndUpdate(request.params.id, { wins: request.body.wins }, options);
 };
 
-export default Profile;
