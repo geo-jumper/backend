@@ -41,6 +41,7 @@ accountSchema.methods.verifyPassword = function(password) {
 
 accountSchema.methods.createToken = function() {
   this.tokenSeed = crypto.randomBytes(64).toString('hex');
+  console.log('this', this);
 
   return this.save()
     .then(account => {

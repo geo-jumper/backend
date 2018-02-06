@@ -19,9 +19,10 @@ const profileSchema = new Schema({
   },
 });
 
-const Profile = mongoose.model('profile', profileSchema);
+const Profile = module.exports = mongoose.model('profile', profileSchema);
 
 Profile.create = function(request) {
+  console.log('new Profile request', request);
   return new Profile({
     account: request.account._id,
     name: request.account.username,
@@ -51,4 +52,3 @@ Profile.update = function(request) {
   return Profile.findByIdAndUpdate(request.params.id, { wins: request.body.wins }, options);
 };
 
-export default Profile;
