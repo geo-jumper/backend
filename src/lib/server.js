@@ -53,6 +53,7 @@ export const start = () => {
       .then(() => {
         state.http = app.listen(process.env.PORT, () => {
           log('info', `Server is listening on port: ${process.env.PORT}`);
+          console.log('info', `Server is listening on port: ${process.env.PORT}`);
           return resolve();
         });
 
