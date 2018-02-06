@@ -22,7 +22,6 @@ const profileSchema = new Schema({
 const Profile = module.exports = mongoose.model('profile', profileSchema);
 
 Profile.create = function(request) {
-  console.log('new Profile request', request);
   return new Profile({
     account: request.account._id,
     name: request.account.username,

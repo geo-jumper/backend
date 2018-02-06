@@ -11,7 +11,6 @@ profileMockFactory.create = () => {
   return accountMockFactory.create()
     .then(accountMock => {
       mock.accountMock = accountMock;
-      console.log('profile-mock-factory accountMock.request',accountMock.request);
       return new Profile({
         name: mock.accountMock.request.username,
         account: mock.accountMock.account._id,

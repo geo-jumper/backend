@@ -41,7 +41,6 @@ accountSchema.methods.verifyPassword = function(password) {
 
 accountSchema.methods.createToken = function() {
   this.tokenSeed = crypto.randomBytes(64).toString('hex');
-  console.log('this', this);
 
   return this.save()
     .then(account => {
@@ -62,7 +61,7 @@ Account.create = account => {
   }
 
   let { password } = account;
-
+  account.tokenSeed = crypto.randomBytes(64).toString('hex');
   account = Object.assign({}, account, { password: undefined });
   const HASH_SALT_ROUNDS = 1;
 
