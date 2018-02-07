@@ -2,8 +2,8 @@ config:
   # target: 'http://localhost:3000'
   target: 'https://geo-jumper-backend.herokuapp.com'
   phases:
-    - duration: 5 
-      arrivalRate: 1 
+    - duration: 5
+      arrivalRate: 1
     - duration: 10 # five seconds
       arrivalRate: 20 # 20 fake users per second
   processor: "./load-test-create-user.js"

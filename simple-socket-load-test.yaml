@@ -1,13 +1,18 @@
 config:
-  target: 'http://localhost:3000'
+  target: 'https://geo-jumper-backend.herokuapp.com'
+  # target: "http://localhost:3000"
   phases:
-    - duration: 600
-      arrivalRate: 5
+    - duration: 10
+      arrivalRate: 30
+    # - duration: 60
+    #   arrivalRate: 30
 scenarios:
-  - name: "Connect"
+  - engine: "socketio"
     flow:
       - loop:
           - emit:
-              channel: "connection"
-          - think: 1
-        count: 50
+              channel: "join-room"
+          - emit:
+              channel: "render-players"
+              data: { "direction": "left", "characterStatus": [10, 10, 10, 10, 10, 10, 10, 10, 10, 10]}
+        count: 2
