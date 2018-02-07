@@ -12,6 +12,8 @@ export const socketInit = server => {
   const USERS = {};
 
   io.on('connection', socket => {
+    console.log('connection');
+    socket.emit('connection', 1); //Jeff - for testing only
     socket.on('join-room', () => {
       if (MAX_USERS === 0) {
         MAX_USERS = 2;
@@ -19,7 +21,7 @@ export const socketInit = server => {
       }
 
       MAX_USERS--;
-
+      console.log('max users', MAX_USERS);
       socket.join(room);
       console.log('user joined room', room);
 
