@@ -14,32 +14,19 @@ let ioOptions = {
 let sender, receiver, p3;
 
 describe('socket.io', () => {
-  // beforeEach(() => {
-  //   // start();
-  //   return sender = io(__API_URL__, ioOptions);
-   
-  // });
-  // beforeEach(() =>{
-  //   return receiver = io(__API_URL__, ioOptions);
-  // });
-  afterEach(() => {
-    // return sender.disconnect();
-    
-    // stop();
-  });
-  afterEach(() => {
-    // return receiver.disconnect();
-  });
+  beforeEach(start);
+  afterEach(stop);
+  
   describe('player updates', () => {
     test('emitted player object should be received', (done) => {
-      let playerObject = {
-        direction: 'right',
-        characterStatus: [1,2,3,4,5,6,7,8],
-      };
-      let badObject = {
-        direction: 'left',
-        characterStatus: [1,2],
-      };
+      // let playerObject = {
+      //   direction: 'right',
+      //   characterStatus: [1,2,3,4,5,6,7,8],
+      // };
+      // let badObject = {
+      //   direction: 'left',
+      //   characterStatus: [1,2],
+      // };
       // console.log('sender', sender);
       // console.log('receiver', receiver);
 
@@ -50,7 +37,9 @@ describe('socket.io', () => {
       sender.on('connection', () => {
         console.log('sender connected');
         receiver = io(__API_URL__, ioOptions);
-        receiver.on('connection', () => {
+        receiver.on('connection', (value) => {
+          // 'connection sends a value of 1.  This is not used by the app.  For testing only.
+          expect(value).toBe(1);
           console.log('receiver connected');
           p3 = io(__API_URL__, ioOptions);
           p3.on('connection', () => {
@@ -71,10 +60,7 @@ describe('socket.io', () => {
           });
         });
       });
-      
-      // p3.emit('join-room');
-      
-      
+       
       // sender.emit('update-player', playerObject);
       // receiver.on('render-players', function(msg) {
       //   console.log(msg);

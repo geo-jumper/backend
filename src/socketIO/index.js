@@ -13,7 +13,7 @@ export const socketInit = server => {
 
   io.on('connection', socket => {
     console.log('connection');
-    socket.emit('connection'); //Jeff - for testing only
+    socket.emit('connection', 1); //Jeff - for testing only
     socket.on('join-room', () => {
       if (MAX_USERS === 0) {
         MAX_USERS = 2;
