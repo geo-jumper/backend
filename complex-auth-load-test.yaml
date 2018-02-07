@@ -1,0 +1,33 @@
+config:
+  # target: 'http://localhost:3000'
+  target: 'https://geo-jumper-backend.herokuapp.com'
+  phases:
+    - duration: 5 
+      arrivalRate: 1 
+    - duration: 10 # five seconds
+      arrivalRate: 20 # 20 fake users per second
+  processor: "./load-test-create-user.js"
+scenarios:
+  - name: "Create Users"
+    flow:
+    - function: "generateRandomAccount"
+    - post:
+        url: "/signup"
+        json:
+          username: "{{ username }}"
+          email: "{{ email }}"
+          password: "{{ password }}"
+        capture:
+          json: "$.token"
+          as: "token"
+    - log: "Sent a request with {{ username }} to signup/"
+    # - post:
+    #     url: "/profiles"
+    #     headers:
+    #       Authorization: "Bearer {{ token }}"
+    #     json:
+    #       bio: "{{ bio }}"
+    #       avatar: "{{ avatar }}"
+    #       firstName: "{{ firstName }}"
+    #       lastName: "{{ lastName }}"
+    # - log : "Sent a request to profiles/"

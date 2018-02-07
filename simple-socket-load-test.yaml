@@ -1,0 +1,13 @@
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 600
+      arrivalRate: 5
+scenarios:
+  - name: "Connect"
+    flow:
+      - loop:
+          - emit:
+              channel: "connection"
+          - think: 1
+        count: 50
