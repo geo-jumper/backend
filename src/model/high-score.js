@@ -19,8 +19,8 @@ const HighScore = (module.exports = mongoose.model('high-score', highScoreSchema
 HighScore.create = function(newScore) {
   return new HighScore ({
     level: newScore.level,
-    scores: {username: newScore.username, score: newScore.score};
-  }).save()
+    scores: {username: newScore.username, score: newScore.score},
+  }).save();
 };
 
 HighScore.update = function(newScore) {
