@@ -52,7 +52,7 @@ accountSchema.methods.createToken = function() {
 };
 
 // Model
-const Account = mongoose.model('account', accountSchema);
+const Account = module.exports = mongoose.model('account', accountSchema);
 
 Account.create = account => {
   if (!account.password || !account.email || !account.username) {
@@ -61,7 +61,7 @@ Account.create = account => {
   }
 
   let { password } = account;
-
+  account.tokenSeed = crypto.randomBytes(64).toString('hex');
   account = Object.assign({}, account, { password: undefined });
   const HASH_SALT_ROUNDS = 1;
 
@@ -72,5 +72,3 @@ Account.create = account => {
     });
 };
 
-// Interface
-export default Account;

@@ -1,4 +1,5 @@
 import uuidv1 from 'uuid';
+import HighScore from '../model/high-score';
 let room = 'default';
 let MAX_USERS = 2;
 
@@ -6,43 +7,73 @@ export const socketInit = server => {
   const io = require('socket.io')(server);
 
   // open cors
-  io.set('origins', 'http://localhost:8080');
+  // io.set('origins', 'http://localhost:8080');
 
   // Localized state to change into DB state
   const USERS = {};
-  const ROOMS = {};
 
   io.on('connection', socket => {
+    console.log('connection');
+    socket.emit('connection', 1); //Jeff - for testing only
+    socket.on('join-room', () => {
+      if (MAX_USERS === 0) {
+        MAX_USERS = 2;
+        room = uuidv1();
+      }
 
-    if (MAX_USERS === 0) {
-      MAX_USERS = 2;
-      room = uuidv1();
-    }
+      MAX_USERS--;
+      console.log('max users', MAX_USERS);
+      socket.join(room);
+      console.log('user joined room', room);
 
-    MAX_USERS--;
+      USERS[socket.id] = {};
+      USERS[socket.id].username = 'anon';
+      USERS[socket.id].room = room;
 
-    socket.join(room);
-    console.log('user joined room', room);
+      if (MAX_USERS === 0) {
+        io.in(USERS[socket.id].room).emit('match-found');
+      }
 
-    USERS[socket.id] = {};
-    USERS[socket.id].username = 'anon';
-    USERS[socket.id].room = room;
+      socket.on('disconnect', () => {
+        socket.leave(room);
+        console.log('LEFT', socket.id);
+      });
 
-    socket.on('disconnect', () => {
-      socket.leave(room);
-      console.log('LEFT', socket.id);
-    });
+      socket.on('update-player', (playerObject) => {
+        // player object = { x, y, width, height }
+        // socket.broadcast.emit('render-players', playerObject);
+        // io.in(USERS[socket.id].room).emit('render-players', playerObject);
+        socket.broadcast.to(USERS[socket.id].room).emit('render-players', playerObject);
+      });
 
-    socket.on('send-message', data => {
-      data.username = USERS[socket.id].username;
-      data.timestamp = new Date();
+      // socket.on('send-message', data => {
+      //   data.username = USERS[socket.id].username;
+      //   data.timestamp = new Date();
 
-      console.log('Message:', data);
-      io.in(USERS[socket.id].room).emit('receive-message', data);
-    });
+      //   console.log('Message:', data);
+      //   io.in(USERS[socket.id].room).emit('receive-message', data);
+      // });
 
-    socket.on('set-username', data => {
-      USERS[socket.id].username = data.username;
+      socket.on('set-username', data => {
+        USERS[socket.id].username = data.username;
+
+      });
+      socket.on('capture-star', levelResults => {
+        let { level, score } = levelResults;
+        let { username } = USERS[socket.id];
+        console.log(level);
+        console.log(score);
+        console.log(username);
+
+        // TODO: handle storing level and score
+        let newScore = {};
+        newScore.level = level;
+        newScore.score = score;
+        newScore.username = username;
+
+        HighScore.update(newScore);
+        socket.broadcast.to(USERS[socket.id].room).emit('return-star', { username });
+      });
     });
   });
 };
