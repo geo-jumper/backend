@@ -32,7 +32,7 @@ HighScore.update = function(newScore) {
   return HighScore.find({'level': newScore.level}).sort({'scores.score': 'desc'})
     .then(scoreObj => {
       console.log('scoreObj: ', scoreObj);
-      if(!scoreObj[0].scores.length) {
+      if(!scoreObj.length) {
         return HighScore.create(tempNewScore);
       } else {
         if(scoreObj[0].scores.length < NUMSCORES) {
@@ -40,7 +40,9 @@ HighScore.update = function(newScore) {
           //Jeff - add the new score.  Not important to be sorted.  Will sort when extracting for GET request.
           scoreObj[0].scores.push({score:tempNewScore.score, username: tempNewScore.score});
           console.log('updated scoreObj[0].scores: ', scoreObj[0].scores);
+          console.log('new score object length: ', scoreObj[0].scores.length );
           //Jeff - update the db
+          console.log('tempNewScore.level: ', tempNewScore.level);
           HighScore.findOneAndUpdate({'level': tempNewScore.level }, {scores: scoreObj[0].scores});
         } else {
           //Jeff - compare to last score in array
