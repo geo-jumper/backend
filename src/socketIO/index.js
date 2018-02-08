@@ -27,6 +27,7 @@ export const socketInit = server => {
       console.log('user joined room', room);
 
       USERS[socket.id] = {};
+      USERS[socket.id].username = 'anon';
       USERS[socket.id].room = room;
 
       if (MAX_USERS === 0) {
