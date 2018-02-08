@@ -43,14 +43,6 @@ export const socketInit = server => {
         socket.broadcast.to(USERS[socket.id].room).emit('render-players', playerObject);
       });
 
-      // socket.on('send-message', data => {
-      //   data.username = USERS[socket.id].username;
-      //   data.timestamp = new Date();
-
-      //   console.log('Message:', data);
-      //   io.in(USERS[socket.id].room).emit('receive-message', data);
-      // });
-
       socket.on('set-username', data => {
         USERS[socket.id].username = data.username;
 
@@ -62,7 +54,6 @@ export const socketInit = server => {
         console.log(score);
         console.log(username);
 
-        // TODO: handle storing level and score
         let newScore = {};
         newScore.level = level;
         newScore.score = score;
@@ -70,6 +61,21 @@ export const socketInit = server => {
 
         HighScore.update(newScore);
         socket.broadcast.to(USERS[socket.id].room).emit('return-star', { username });
+      });
+
+      socket.on('total-score', sumOfLevels => {
+        let { level, score } = sumOfLevels; // level === 0, sum === total;
+        let { username } = USERS[socket.id];
+        console.log(level);
+        console.log(score);
+        console.log(username);
+
+        let newScore = {};
+        newScore.level = level;
+        newScore.score = score;
+        newScore.username = username;
+
+        HighScore.update(newScore);
       });
     });
   });
