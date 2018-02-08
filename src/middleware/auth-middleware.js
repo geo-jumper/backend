@@ -55,7 +55,7 @@ export const bearerAuth = (request, response, next) => {
   }
 
   return promisify(jwt.verify)(token, process.env.SECRET)
-    .then(({ randomHash }) => Account.findOne({ randomHash }))
+    .then(({ tokenSeed }) => Account.findOne({ tokenSeed }))
     .then(account => {
       if (!account) {
         throw new httpError(401, '__ERROR__ Account not found');
