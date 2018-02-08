@@ -28,7 +28,7 @@ HighScore.update = function(newScore) {
   let tempNewScore = newScore;
   console.log('newScore', newScore);
   const NUMSCORES = 20; //Jeff - Number of scores to save in db
-  // let options = { new: true, runValidators: true };
+  let options = { new: true, runValidators: true };
   return HighScore.find({'level': newScore.level}).sort({'scores.score': 'desc'})
     .then(scoreObj => {
       console.log('scoreObj: ', scoreObj);
@@ -38,22 +38,22 @@ HighScore.update = function(newScore) {
         if(scoreObj[0].scores.length < NUMSCORES) {
           console.log('score object length: ', scoreObj[0].scores.length);
           //Jeff - add the new score.  Not important to be sorted.  Will sort when extracting for GET request.
-          scoreObj[0].scores.push({score:tempNewScore.score, username: tempNewScore.score});
+          scoreObj[0].scores.push({score:tempNewScore.score, username: tempNewScore.username});
           console.log('updated scoreObj[0].scores: ', scoreObj[0].scores);
           console.log('new score object length: ', scoreObj[0].scores.length );
           //Jeff - update the db
           console.log('tempNewScore.level: ', tempNewScore.level);
-          HighScore.findOneAndUpdate({'level': tempNewScore.level }, {scores: scoreObj[0].scores});
+          HighScore.findOneAndUpdate({'level': tempNewScore.level }, {scores: scoreObj[0].scores}, options);
         } else {
           //Jeff - compare to last score in array
           if(tempNewScore.score > scoreObj.scores[NUMSCORES - 1]){
             //Jeff - if bigger, replace.  Not important to be sorted.  Will sort when extracting for GET request.
             scoreObj[0].scores.splice(NUMSCORES - 1, 1, {
               score: tempNewScore.score,
-              username: tempNewScore.score,
+              username: tempNewScore.username,
             });
             //Jeff - update the db
-            HighScore.findOneAndUpdate({ 'level': tempNewScore.level }, scoreObj);
+            HighScore.findOneAndUpdate({ level: tempNewScore.level }, { scores: scoreObj[0].scores }, options);
           }
           //Jeff - else do nothing
         }
