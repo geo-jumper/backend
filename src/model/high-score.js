@@ -36,11 +36,21 @@ HighScore.update = function(request) {
         return HighScore.create(tempRequest);
       } else {
         if(scoreObj.scores.length < 5) {
-          //add the new score and update the db
+          //Jeff - add the new score.  Not important to be sorted.  Will sort when extracting for GET request.
+          scoreObj.scores.push(tempRequest.highScore.score);
+          //Jeff - update the db
+          HighScore.findOneAndUpdate({'level': tempRequest.highScore.level }, scoreObj);
         } else {
-          //compare to last score in array
-          //if bigger, replace and update the db
+          //Jeff - compare to last score in array
+          if(tempRequest.highScore.score > scoreObj.scores[4]){
+            //Jeff - if bigger, replace.  Not important to be sorted.  Will sort when extracting for GET request.
+            scoreObj.scores.splice(4, 1, tempRequest.highScore);
+            //Jeff - update the db
+            HighScore.findOneAndUpdate({ level: tempRequest.highScore.level }, scoreObj);
+          }
+          //Jeff - else do nothing
         }
       }
-    });
+    })
+    .catch(err => console.log(err));
 };
