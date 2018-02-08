@@ -6,14 +6,14 @@ export const socketInit = server => {
   const io = require('socket.io')(server);
 
   // open cors
-  // io.set('origins', 'http://localhost:8080');
+  io.set('origins', '*:*');
 
   // Localized state to change into DB state
   const USERS = {};
 
   io.on('connection', socket => {
     console.log('connection');
-    socket.emit('connection', 1); //Jeff - for testing only
+    socket.emit('connection', 1);
     socket.on('join-room', () => {
       if (MAX_USERS === 0) {
         MAX_USERS = 2;
@@ -26,7 +26,6 @@ export const socketInit = server => {
       console.log('user joined room', room);
 
       USERS[socket.id] = {};
-      USERS[socket.id].username = 'anon';
       USERS[socket.id].room = room;
 
       if (MAX_USERS === 0) {
@@ -39,23 +38,7 @@ export const socketInit = server => {
       });
 
       socket.on('update-player', (playerObject) => {
-        // player object = { x, y, width, height }
-        // socket.broadcast.emit('render-players', playerObject);
-        // io.in(USERS[socket.id].room).emit('render-players', playerObject);
         socket.broadcast.to(USERS[socket.id].room).emit('render-players', playerObject);
-      });
-
-      // socket.on('send-message', data => {
-      //   data.username = USERS[socket.id].username;
-      //   data.timestamp = new Date();
-
-      //   console.log('Message:', data);
-      //   io.in(USERS[socket.id].room).emit('receive-message', data);
-      // });
-
-      socket.on('set-username', data => {
-        USERS[socket.id].username = data.username;
-
       });
     });
   });
