@@ -46,7 +46,7 @@ HighScore.update = function(request) {
             //Jeff - if bigger, replace.  Not important to be sorted.  Will sort when extracting for GET request.
             scoreObj.scores.splice(4, 1, tempRequest.highScore);
             //Jeff - update the db
-            HighScore.findOneAndUpdate({ level: tempRequest.highScore.level }, scoreObj);
+            HighScore.findOneAndUpdate({ 'level': tempRequest.highScore.level }, scoreObj);
           }
           //Jeff - else do nothing
         }
