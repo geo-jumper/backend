@@ -1,4 +1,5 @@
 import uuidv1 from 'uuid';
+import HighScore from '../model/high-score';
 let room = 'default';
 let MAX_USERS = 2;
 
@@ -56,6 +57,22 @@ export const socketInit = server => {
       socket.on('set-username', data => {
         USERS[socket.id].username = data.username;
 
+      });
+      socket.on('capture-star', levelResults => {
+        let { level, score } = levelResults;
+        let { username } = USERS[socket.id];
+        console.log(level);
+        console.log(score);
+        console.log(username);
+
+        // TODO: handle storing level and score
+        let newScore = {};
+        newScore.level = level;
+        newScore.score = score;
+        newScore.username = username;
+
+        HighScore.update(newScore);
+        socket.broadcast.to(USERS[socket.id].room).emit('return-star', { username });
       });
     });
   });

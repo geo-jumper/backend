@@ -7,6 +7,7 @@ import accountRouter from './account-router';
 import profileRouter from './profile-router';
 import errorMiddleware from '../middleware/error-middleware';
 import bindResponseMethods from '../middleware/bind-response-methods';
+import highScoreRouter from './high-score-router';
 
 export default new Router()
   .use([
@@ -18,5 +19,6 @@ export default new Router()
     bindResponseMethods,
     accountRouter,
     profileRouter,
+    highScoreRouter,
     errorMiddleware,
   ]);
