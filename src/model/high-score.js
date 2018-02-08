@@ -43,7 +43,9 @@ HighScore.update = function(newScore) {
           console.log('new score object length: ', scoreObj[0].scores.length );
           //Jeff - update the db
           console.log('tempNewScore.level: ', tempNewScore.level);
-          HighScore.findOneAndUpdate({'level': tempNewScore.level }, {scores: scoreObj[0].scores}, options);
+          HighScore.findOneAndUpdate({level: tempNewScore.level }, {scores: scoreObj[0].scores}, options, (error, data) => {
+            console.log(data);
+          });
         } else {
           //Jeff - compare to last score in array
           if(tempNewScore.score > scoreObj.scores[NUMSCORES - 1]){
