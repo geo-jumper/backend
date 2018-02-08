@@ -38,6 +38,7 @@ HighScore.update = function(newScore) {
         if(scoreObj[0].scores.length < NUMSCORES) {
           //Jeff - add the new score.  Not important to be sorted.  Will sort when extracting for GET request.
           scoreObj[0].scores.push({'score':tempNewScore.score, 'username': tempNewScore.score});
+          console.log('updated scoreObj: ', scoreObj);
           //Jeff - update the db
           HighScore.findOneAndUpdate({'level': tempNewScore.level }, scoreObj);
         } else {
