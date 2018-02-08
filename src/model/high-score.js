@@ -32,7 +32,7 @@ HighScore.update = function(newScore) {
   return HighScore.find({'level': newScore.level}).sort({'scores.score': 'desc'})
     .then(scoreObj => {
       console.log('scoreObj: ', scoreObj);
-      if(!scoreObj.length) {
+      if(!scoreObj[0].scores.length) {
         return HighScore.create(tempNewScore);
       } else {
         if(scoreObj.scores.length < NUMSCORES) {
