@@ -35,7 +35,7 @@ HighScore.update = function(newScore) {
       if(!scoreObj[0].scores.length) {
         return HighScore.create(tempNewScore);
       } else {
-        if(scoreObj.scores.length < NUMSCORES) {
+        if(scoreObj[0].scores.length < NUMSCORES) {
           //Jeff - add the new score.  Not important to be sorted.  Will sort when extracting for GET request.
           scoreObj.scores.push({'score':tempNewScore.score, 'username': tempNewScore.score});
           //Jeff - update the db
