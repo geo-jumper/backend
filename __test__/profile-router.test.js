@@ -27,7 +27,7 @@ describe('profile-router.js', () => {
               expect(response.status).toEqual(200);
               expect(response.body.name).toEqual(tempAccountMock.account.username);
               expect(response.body.account).toEqual(tempAccountMock.account._id.toString());
-              expect(response.body.wins).toEqual(0);
+              expect(response.body.points).toEqual(0);
             });
         });
     });
@@ -114,10 +114,10 @@ describe('profile-router.js', () => {
         .then(mockProfile => {
           return superagent.put(`${__API_URL__}/profiles/${mockProfile.profile._id}`)
             .set('Authorization', `Bearer ${mockProfile.accountMock.token}`)
-            .send({wins: 1})
+            .send({points: 1})
             .then(response => {
               expect(response.status).toEqual(200);
-              expect(response.body.wins).toEqual(1);
+              expect(response.body.points).toEqual(1);
             });
         });
     });
@@ -127,7 +127,7 @@ describe('profile-router.js', () => {
           return superagent
             .put(`${__API_URL__}/profiles/${mockProfile.profile._id}`)
             .set('Authorization', `Bearer badtoken`)
-            .send({ wins: 1 })
+            .send({ points: 1 })
             .catch(response => {
               expect(response.status).toEqual(401);
             });

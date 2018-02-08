@@ -18,7 +18,7 @@ export default new Router()
       .then(token => {
         response.send(token);
       })
-      .then(() => new Profile({ name: tempAccount.username, account: tempAccount._id, wins: 0 })
+      .then(() => new Profile({ name: tempAccount.username, account: tempAccount._id, points: 0 })
         .save()
       )
       .catch(next);
