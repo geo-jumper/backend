@@ -40,7 +40,7 @@ HighScore.update = function(newScore) {
           scoreObj[0].scores.push({score:tempNewScore.score, username: tempNewScore.score});
           console.log('updated scoreObj: ', scoreObj);
           //Jeff - update the db
-          HighScore.findOneAndUpdate({'level': tempNewScore.level }, {scores: scoreObj});
+          HighScore.findOneAndUpdate({'level': tempNewScore.level }, {scores: scoreObj[0].scores});
         } else {
           //Jeff - compare to last score in array
           if(tempNewScore.score > scoreObj.scores[NUMSCORES - 1]){
