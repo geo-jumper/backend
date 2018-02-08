@@ -8,9 +8,10 @@ const highScoreSchema = new Schema({
     type: Number,
     required: true,
   },
-  scores: {
-    type: [Object], //Jeff - {'username': username, 'score': score}
-  },
+  scores: [{
+    username: String,
+    score: Number, //Jeff - {'username': username, 'score': score}
+  }],
 });
 
 // Model
@@ -19,17 +20,19 @@ const HighScore = (module.exports = mongoose.model('high-score', highScoreSchema
 HighScore.create = function(newScore) {
   return new HighScore ({
     level: newScore.level,
-    scores: {username: newScore.username, score: newScore.score},
+    scores: [{username: newScore.username, score: newScore.score}],
   }).save();
 };
 
 HighScore.update = function(newScore) {
   let tempNewScore = newScore;
+  console.log('newScore', newScore);
   const NUMSCORES = 20; //Jeff - Number of scores to save in db
   // let options = { new: true, runValidators: true };
   return HighScore.find({'level': newScore.level}).sort({'scores.score': 'desc'})
     .then(scoreObj => {
-      if(!scoreObj) {
+      console.log('scoreObj: ', scoreObj);
+      if(!scoreObj.length) {
         return HighScore.create(tempNewScore);
       } else {
         if(scoreObj.scores.length < NUMSCORES) {
