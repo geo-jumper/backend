@@ -37,17 +37,17 @@ HighScore.update = function(newScore) {
       } else {
         if(scoreObj[0].scores.length < NUMSCORES) {
           //Jeff - add the new score.  Not important to be sorted.  Will sort when extracting for GET request.
-          scoreObj[0].scores.push({'score':tempNewScore.score, 'username': tempNewScore.score});
+          scoreObj[0].scores.push({score:tempNewScore.score, username: tempNewScore.score});
           console.log('updated scoreObj: ', scoreObj);
           //Jeff - update the db
-          HighScore.findOneAndUpdate({'level': tempNewScore.level }, scoreObj);
+          HighScore.findOneAndUpdate({'level': tempNewScore.level }, {scores: scoreObj});
         } else {
           //Jeff - compare to last score in array
           if(tempNewScore.score > scoreObj.scores[NUMSCORES - 1]){
             //Jeff - if bigger, replace.  Not important to be sorted.  Will sort when extracting for GET request.
             scoreObj[0].scores.splice(NUMSCORES - 1, 1, {
-              'score': tempNewScore.score,
-              'username': tempNewScore.score,
+              score: tempNewScore.score,
+              username: tempNewScore.score,
             });
             //Jeff - update the db
             HighScore.findOneAndUpdate({ 'level': tempNewScore.level }, scoreObj);
