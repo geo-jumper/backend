@@ -51,10 +51,12 @@ HighScore.update = function(newScore) {
           //Jeff - compare to last score in array
           if(tempNewScore.score > scoreObj[0].scores[NUMSCORES - 1]){
             //Jeff - if bigger, replace.  Not important to be sorted.  Will sort when extracting for GET request.
+            console.log('update scores: old scoreObj[0].scores');
             scoreObj[0].scores.splice(NUMSCORES - 1, 1, {
               score: tempNewScore.score,
               username: tempNewScore.username,
             });
+            console.log('update scores: new scoreObj[0].scores');
             //Jeff - update the db
             HighScore.findOneAndUpdate({ level: tempNewScore.level }, { scores: scoreObj[0].scores }, options);
           }
