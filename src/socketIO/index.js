@@ -27,7 +27,6 @@ export const socketInit = server => {
       console.log('user joined room', room);
 
       USERS[socket.id] = {};
-      USERS[socket.id].username = 'anon';
       USERS[socket.id].room = room;
 
       if (MAX_USERS === 0) {
@@ -53,7 +52,7 @@ export const socketInit = server => {
       });
 
       socket.on('set-username', data => {
-        USERS[socket.id].username = data.username;
+        USERS[socket.id].username = data;
 
       });
       socket.on('capture-star', levelResults => {
