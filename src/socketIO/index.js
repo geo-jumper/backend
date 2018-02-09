@@ -33,7 +33,7 @@ export const socketInit = server => {
       }
 
       socket.on('disconnect', () => {
-        MAX_USERS += 1;
+        MAX_USERS = 2;
         socket.leave(room);
         console.log('info', `LEFT: ${socket.id}`);
       });
