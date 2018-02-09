@@ -16,7 +16,21 @@ const highScoreSchema = new Schema({
 
 // Model
 const HighScore = (module.exports = mongoose.model('high-score', highScoreSchema));
+//Jeff - for sorting
+const compare = (a, b) => {
+  const scoreA = a.score;
+  const scoreB = b.score;
 
+  let comparison = 0;
+
+  if(scoreA > scoreB){
+    comparison = 1;
+  }
+  if(scoreA < scoreB){
+    comparison = -1;
+  }
+  return comparison;
+};
 HighScore.create = function(newScore) {
   return new HighScore ({
     level: newScore.level,
@@ -32,11 +46,12 @@ HighScore.update = function(newScore) {
   console.log('newScore', newScore);
   const NUMSCORES = 20; //Jeff - Number of scores to save in db
   let options = { new: true, runValidators: true };
-  return HighScore.find({'level': newScore.level}).sort('-scores.score')
+  return HighScore.find({'level': newScore.level})
     .then(scoreObj => {
       if(!scoreObj.length) {
         return HighScore.create(tempNewScore);
       } else {
+        scoreObj[0].scores.sort(compare);//Jeff-sorts in descending order
         if(scoreObj[0].scores.length < NUMSCORES) {
           //Jeff - add the new score.  Not important to be sorted.  Will sort when extracting for GET request.
           scoreObj[0].scores.push({score:tempNewScore.score, username: tempNewScore.username});
