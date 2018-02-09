@@ -24,10 +24,10 @@ const compare = (a, b) => {
   let comparison = 0;
 
   if(scoreA > scoreB){
-    comparison = 1;
+    comparison = -1;
   }
   if(scoreA < scoreB){
-    comparison = -1;
+    comparison = 1;
   }
   return comparison;
 };
