@@ -1,7 +1,6 @@
 'use strict';
 
 require('./lib/setup');
-const faker = require('faker');
 const superagent = require('superagent');
 const { start, stop } = require('../src/lib/server');
 const accountMock = require('./lib/account-mock-factory');
