@@ -2,7 +2,6 @@
 
 const Profile = require('../../src/model/profile');
 const accountMockFactory = require('./account-mock-factory');
-const faker = require('faker');
 
 const profileMockFactory = module.exports = {};
 

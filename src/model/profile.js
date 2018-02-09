@@ -9,7 +9,7 @@ const profileSchema = new Schema({
     type: String,
     required: true,
   },
-  wins: {
+  points: {
     type: Number,
   },
   account: {
@@ -25,7 +25,7 @@ Profile.create = function(request) {
   return new Profile({
     account: request.account._id,
     name: request.account.username,
-    wins: 0,
+    points: 0,
   })
     .save()
     .then(profile => {
@@ -48,6 +48,5 @@ Profile.fetchOne = function(request) {
 
 Profile.update = function(request) {
   let options = { new: true, runValidators: true };
-  return Profile.findByIdAndUpdate(request.params.id, { wins: request.body.wins }, options);
+  return Profile.findByIdAndUpdate(request.params.id, { points: request.body.points }, options);
 };
-
