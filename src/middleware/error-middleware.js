@@ -2,7 +2,7 @@
 
 import { log } from '../lib/logger';
 
-module.exports = (error, request, response, next) => {
+module.exports = (error, request, response, next) => { // eslint-disable-line
   // ================ HTTP ERRORS ================
   log('info', `__MIDDLEWARE_IS_HANDLING_ERROR__ `);
   log('error', error);

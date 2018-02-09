@@ -20,7 +20,6 @@ export default new Router()
     Profile.findOne({ account: request.account._id })
       .then(profile => {
         if (!profile) {
-          console.log('===>', request.account);
           return next(httpError(404, '__ERROR__ Profile not found'));
         }
         return response.json(profile);

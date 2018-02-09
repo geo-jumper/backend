@@ -4,7 +4,6 @@ import { Router } from 'express';
 import Account from '../model/account';
 import Profile from '../model/profile';
 import { basicAuth } from '../middleware/auth-middleware';
-import httpError from 'http-errors';
 
 let tempAccount = null;
 
