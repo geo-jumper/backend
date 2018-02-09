@@ -32,7 +32,7 @@ HighScore.update = function(newScore) {
   console.log('newScore', newScore);
   const NUMSCORES = 20; //Jeff - Number of scores to save in db
   let options = { new: true, runValidators: true };
-  return HighScore.find({'level': newScore.level}).sort({'scores.score': 'desc'})
+  return HighScore.find({'level': newScore.level}).sort('-scores.score')
     .then(scoreObj => {
       if(!scoreObj.length) {
         return HighScore.create(tempNewScore);
