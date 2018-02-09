@@ -34,7 +34,7 @@ In this application, our team configured webpack to compile JavaScript and SASS 
 
 ### Models:
 
-![Models Overview](./src/images/geo-jumper-backend-models.png)
+![Models Overview](./src/images/models-overview.png)
 
 ### How to use?
 #### To use the Geo-Jumper Game Application:
@@ -52,6 +52,8 @@ In this application, our team configured webpack to compile JavaScript and SASS 
 ### Load Testing:
 
 * Load testing conducted with artillery to test socket.io connections.
+
+![Load Testing Overview](./src/images/load-testing.png)
 ### Developer Tools:
 
 * Step 1. Fork and Clone the Repository.
@@ -124,6 +126,7 @@ Standard JavaScript with ES6 Syntax.
 * Heroku - for deployment
 * Travis.ci - for continuous integration
 * MongoDB - for persistence
+* Artillery - load testing
 
 ### License
 
