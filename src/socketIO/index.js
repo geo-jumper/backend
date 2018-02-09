@@ -34,11 +34,20 @@ export const socketInit = server => {
       }
 
       socket.on('disconnect', () => {
+        MAX_USERS += 1;
         socket.leave(room);
         console.log('LEFT', socket.id);
       });
 
+      socket.on('get-player-username', () => {
+        let { username } = USERS[socket.id];
+        console.log('username in backend', username);
+        
+        socket.emit('send-player-username', username);
+      });
+
       socket.on('update-player', (playerObject) => {
+        playerObject.username = USERS[socket.id].username;
         socket.broadcast.to(USERS[socket.id].room).emit('render-players', playerObject);
       });
 
