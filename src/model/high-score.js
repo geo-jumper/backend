@@ -49,7 +49,7 @@ HighScore.update = function(newScore) {
           });
         } else {
           //Jeff - compare to last score in array
-          console.log('if tempNewScore.score', tempNewScore.score, '> scoreObj[0].scores[19]', scoreObj[0].scores[NUMSCORES - 1]);
+          console.log('if tempNewScore.score', tempNewScore.score, '> scoreObj[0].scores[19].score', scoreObj[0].scores[NUMSCORES - 1].score);
           if(tempNewScore.score > scoreObj[0].scores[NUMSCORES - 1].score){
             //Jeff - if bigger, replace.  Not important to be sorted.  Will sort when extracting for GET request.
             console.log('update scores: old scoreObj[0].scores');
