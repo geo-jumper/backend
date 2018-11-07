@@ -8,7 +8,6 @@ import { promisify } from '../lib/util';
 
 export const basicAuth = (request, response, next) => {
   let { authorization } = request.headers;
-  console.log(authorization);
 
   if (!authorization) {
     return next(httpError(400, '__ERROR__ Authorization header required'));

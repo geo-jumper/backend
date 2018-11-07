@@ -13,7 +13,6 @@ export const socketInit = server => {
   const USERS = {};
 
   io.on('connection', socket => {
-    console.log('connection');
     socket.emit('connection', 1);
     socket.on('join-room', () => {
       if (MAX_USERS === 0) {
@@ -22,9 +21,9 @@ export const socketInit = server => {
       }
 
       MAX_USERS--;
-      console.log('max users', MAX_USERS);
+      console.log('info', `max users: ${MAX_USERS}`);
+      console.log('info', `user joined room: ${room}`);
       socket.join(room);
-      console.log('user joined room', room);
 
       USERS[socket.id] = {};
       USERS[socket.id].room = room;
@@ -34,15 +33,14 @@ export const socketInit = server => {
       }
 
       socket.on('disconnect', () => {
-        MAX_USERS += 1;
         socket.leave(room);
-        console.log('LEFT', socket.id);
+        MAX_USERS = 2;
+        room = uuidv1();
+        console.log('info', `LEFT: ${socket.id}`);
       });
 
       socket.on('get-player-username', () => {
         let { username } = USERS[socket.id];
-        console.log('username in backend', username);
-        
         socket.emit('send-player-username', username);
       });
 
@@ -58,9 +56,6 @@ export const socketInit = server => {
       socket.on('capture-star', levelResults => {
         let { level, score } = levelResults;
         let { username } = USERS[socket.id];
-        console.log(level);
-        console.log(score);
-        console.log(username);
 
         let newScore = {};
         newScore.level = level;
@@ -72,11 +67,8 @@ export const socketInit = server => {
       });
 
       socket.on('total-score', sumOfLevels => {
-        let { level, score } = sumOfLevels; // level === 0, sum === total;
+        let { level, score } = sumOfLevels; // level === 0, score === total of all levels;
         let { username } = USERS[socket.id];
-        console.log(level);
-        console.log(score);
-        console.log(username);
 
         let newScore = {};
         newScore.level = level;

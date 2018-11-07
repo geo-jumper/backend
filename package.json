@@ -8,7 +8,8 @@
     "start": "node index.js",
     "watch": "nodemon index.js --ignore logs",
     "dbon": "mkdir -p ./db && mongod --dbpath ./db",
-    "dboff": "killall mongod"
+    "dboff": "killall mongod",
+    "lint": "eslint ./"
   },
   "repository": {
     "type": "git",
